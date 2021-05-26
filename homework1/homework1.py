@@ -1,11 +1,19 @@
 import pandas as pd
 import numpy as np
 
-data = pd.read_fwf("magic04.data", header = None, thousands = ",", dtype = np.float32)
+data = pd.read_fwf("magic04.data", header = None)
 
-for column in data:
-    print(data[column])
-    break
+array = np.zeros((data.shape[0], 12))
+print(data.shape)
+i = 0
+
+for i in range(data.shape[0]):
+    temp = data.loc[i].to_string()
+    temp = temp.split(',')
+    print(temp)
+    print(len(temp))
+    i += 1
+
 #data = np.array(data, dtype = np.float32)
 
 # def maximum(filename, attribute_number):

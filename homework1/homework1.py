@@ -1,62 +1,118 @@
 import pandas as pd
 import numpy as np
+import sys
+import matplotlib.pyplot as plt
 
-data = pd.read_fwf("magic04.data", header = None)
+filename = sys.argv[-2]
+attribute_number = int(sys.argv[-1])
 
-array = np.zeros((data.shape[0], 12))
-print(data.shape)
-i = 0
+def maximum(filename, attribute_number):
+    #Input: Filename a string and the attribute number 1 to 10
+    #Output: Returns maximum value
+    #Do not print anything to stdout
+    data = pd.read_csv(filename, header = None)
+    data = data.drop(columns = [10])
+    data = data.to_numpy()
+    data = np.array(data, dtype = np.float32)
+    return np.amax(data[:, attribute_number])
 
-for i in range(data.shape[0]):
-    temp = data.loc[i].to_string()
-    temp = temp.split(',')
-    print(temp)
-    print(len(temp))
-    i += 1
+def minimum(filename, attribute_number):
+    #Input: Filename a string and the attribute number 1 to 10
+    #Output: Returns minimum value
+    #Do not print anything to stdout
+    data = pd.read_csv(filename, header = None)
+    data = data.drop(columns = [10])
+    data = data.to_numpy()
+    data = np.array(data, dtype = np.float32)
+    return np.amin(data[:, attribute_number])
 
-#data = np.array(data, dtype = np.float32)
+def mean(filename, attribute_number):
+    #Input: Filename a string and the attribute number 1 to 10
+    #Output: Returns mean value
+    #Do not print anything to stdout
+    data = pd.read_csv(filename, header = None)
+    data = data.drop(columns = [10])
+    data = data.to_numpy()
+    data = np.array(data, dtype = np.float32)
+    return np.mean(data[:, attribute_number])
 
-# def maximum(filename, attribute_number):
-#     #Input: Filename a string and the attribute number 1 to 10
-#     #Output: Returns maximum value
-#     #Do not print anything to stdout
+def std(filename, attribute_number):
+    #Input: Filename a string and the attribute number 1 to 10
+    #Output: Returns standard deviation value
+    #Do not print anything to stdout
+    data = pd.read_csv(filename, header = None)
+    data = data.drop(columns = [10])
+    data = data.to_numpy()
+    data = np.array(data, dtype = np.float32)
+    return np.std(data[:, attribute_number])
 
-# def minimum(filename, attribute_number):
-#     #Input: Filename a string and the attribute number 1 to 10
-#     #Output: Returns minimum value
-#     #Do not print anything to stdout
+def q1(filename, attribute_number):
+    #Input: Filename a string and the attribute number 1 to 10
+    #Output: Returns Q1 value
+    #Do not print anything to stdout
+    data = pd.read_csv(filename, header = None)
+    data = data.drop(columns = [10])
+    data = data.to_numpy()
+    data = np.array(data, dtype = np.float32)
+    return np.quantile(data[:, attribute_number], 1 / 4)
 
-# def mean(filename, attribute_number):
-#     #Input: Filename a string and the attribute number 1 to 10
-#     #Output: Returns mean value
-#     #Do not print anything to stdout
+def q3(filename, attribute_number):
+    #Input: Filename a string and the attribute number 1 to 10
+    #Output: Returns Q3 value
+    #Do not print anything to stdout
+    data = pd.read_csv(filename, header = None)
+    data = data.drop(columns = [10])
+    data = data.to_numpy()
+    data = np.array(data, dtype = np.float32)
+    return np.quantile(data[:, attribute_number], 3 / 4)
 
-# def std(filename, attribute_number):
-#     #Input: Filename a string and the attribute number 1 to 10
-#     #Output: Returns standard deviation value
-#     #Do not print anything to stdout
+def median(filename, attribute_number):
+    #Input: Filename a string and the attribute number 1 to 10
+    #Output: Returns median value
+    #Do not print anything to stdout
+    data = pd.read_csv(filename, header = None)
+    data = data.drop(columns = [10])
+    data = data.to_numpy()
+    data = np.array(data, dtype = np.float32)
+    return np.quantile(data[:, attribute_number], 1 / 2)
 
-# def q1(filename, attribute_number):
-#     #Input: Filename a string and the attribute number 1 to 10
-#     #Output: Returns Q1 value
-#     #Do not print anything to stdout
+def iqr(filename, attribute_number):
+    #Input: Filename a string and the attribute number 1 to 10
+    #Output: Returns IQR value
+    #Do not print anything to stdout
+    data = pd.read_csv(filename, header = None)
+    data = data.drop(columns = [10])
+    data = data.to_numpy()
+    data = np.array(data, dtype = np.float32)
+    return q3(filename, attribute_number) - q1(filename, attribute_number)
 
-# def q3(filename, attribute_number):
-#     #Input: Filename a string and the attribute number 1 to 10
-#     #Output: Returns Q3 value
-#     #Do not print anything to stdout
+def count(filename, attribute_number):
+    #Input: Filename a string and the attribute number 1 to 10
+    #Output: Returns count value
+    #Do not print anything to stdout
+    data = pd.read_csv(filename, header = None)
+    data = data.drop(columns = [10])
+    data = data.to_numpy()
+    data = np.array(data, dtype = np.float32)
+    return len(data[:, attribute_number])
 
-# def median(filename, attribute_number):
-#     #Input: Filename a string and the attribute number 1 to 10
-#     #Output: Returns median value
-#     #Do not print anything to stdout
+print("maximum", maximum(filename, attribute_number))
+print("minimum", minimum(filename, attribute_number))
+print("mean", mean(filename, attribute_number))
+print("std", std(filename, attribute_number))
+print("q1", q1(filename, attribute_number))
+print("q3", q3(filename, attribute_number))
+print("median", median(filename, attribute_number))
+print("iqr", iqr(filename, attribute_number))
+print("count", count(filename, attribute_number))
 
-# def iqr(filename, attribute_number):
-#     #Input: Filename a string and the attribute number 1 to 10
-#     #Output: Returns IQR value
-#     #Do not print anything to stdout
 
-# def count(filename, attribute_number):
-#     #Input: Filename a string and the attribute number 1 to 10
-#     #Output: Returns count value
-#     #Do not print anything to stdout
+data = pd.read_csv(filename, header = None)
+data = data.drop(columns = [10])
+data = data.to_numpy()
+data = np.array(data, dtype = np.float32)
+print(data[:, 4])
+print(data[:, 5])
+plt.scatter(data[:, 4], data[:, 5])
+plt.show()
+
